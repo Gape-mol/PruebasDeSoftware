@@ -22,6 +22,7 @@ public class Main {
         else {
             return false;
         }
+        //creo que aca simplemente podia hacer return edad >= 18;
     }
 
     public String verificarBoleto(String entradas[][], int fila){
@@ -41,7 +42,7 @@ public class Main {
 
     public boolean validarInvitados(String entradas[][], int fila){
         if (entradas[fila][2] == "VIP"){
-            int numeroInvitados = Integer.parseInt(entradas[fila][4]);
+            int numeroInvitados = Integer.parseInt(entradas[fila][3]);
             if (numeroInvitados <= 2){
                 return true;
             }
@@ -61,7 +62,7 @@ public class Main {
         int aforoMaximoGeneral = 40;
         int aforoMaximoVIP = 20;
         if (sala == "VIP"){
-            for (int i = 0; i < aforoMaximoVIP; i++){
+            for (int i = 0; i < entradas.length; i++){
                 if (entradas[i][4] == "True" && entradas[i][2] == "VIP"){
                     aforoActual++;
                 }
@@ -69,7 +70,7 @@ public class Main {
             return aforoMaximoVIP - aforoActual;
         }
         else{
-            for (int i = 0; i < aforoMaximoGeneral; i++){
+            for (int i = 0; i < entradas.length; i++){
                 if (entradas[i][4] == "True" && entradas[i][2] == "General"){
                     aforoActual++;
                 }
@@ -93,8 +94,12 @@ public class Main {
                 if (verificarBoleto(entradas, fila) == "VIP") {
                     if (validarInvitados(entradas, fila)) {
                         if (aforoDisponible(entradas, sala) > 0) {
-                            ingresarPersona(entradas, fila);
-                            return true;
+                            if(ingresarPersona(entradas, fila)) {
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
                         } else {
                             System.out.println("No hay aforo disponible");
                             return false;
@@ -105,8 +110,12 @@ public class Main {
                     }
                 } else if (verificarBoleto(entradas, fila) == "General") {
                     if (aforoDisponible(entradas, sala) > 0) {
-                        ingresarPersona(entradas, fila);
-                        return true;
+                        if(ingresarPersona(entradas, fila)) {
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
                     } else {
                         System.out.println("No hay aforo disponible");
                         return false;

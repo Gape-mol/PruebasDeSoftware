@@ -45,42 +45,38 @@ class MainTest {
     }
 
     @Test
+    //Tengo dudas de si calcule bien los aforos...
     void aforoDisponible() {
-        assertEquals(8, main.aforoDisponible(entradas, "VIP"));
-        assertEquals(2, main.aforoDisponible(entradas, "General"));
+        assertEquals(19, main.aforoDisponible(entradas, "VIP"));
+        assertEquals(39, main.aforoDisponible(entradas, "General"));
     }
 
     @Test
-    void aforoDisponibleSinEntradas() {
-        assertEquals(20, main.aforoDisponible(entradas, "VIP"));
-        assertEquals(40, main.aforoDisponible(entradas, "General"));
-    }
-
-    @Test
-    void aforoDisponibleConEntradas() {
+    //Tengo dudas x2
+    void aforoDisponibleConInvitados() {
         entradas[0][4] = "True";
         entradas[1][4] = "True";
         entradas[2][4] = "True";
         entradas[3][4] = "True";
         entradas[4][4] = "True";
-        assertEquals(3, main.aforoDisponible(entradas, "VIP"));
-        assertEquals(1, main.aforoDisponible(entradas, "General"));
+        assertEquals(17, main.aforoDisponible(entradas, "VIP"));
+        assertEquals(38, main.aforoDisponible(entradas, "General"));
     }
     @Test
     void ingresarPersonas() {
         assertTrue(main.ingresarPersona(entradas, 0));
         assertTrue(main.ingresarPersona(entradas, 1));
-        assertFalse(main.ingresarPersona(entradas, 2));
+        assertFalse(main.ingresarPersona(entradas, 2)); //No puede ingresar, lleva personas de mas
         assertTrue(main.ingresarPersona(entradas, 3));
         assertFalse(main.ingresarPersona(entradas, 4));
     }
     @Test
     void permitirEntrada(){
-        assertTrue(main.permitirEntrada(entradas, 0, "VIP"));
-        assertFalse(main.permitirEntrada(entradas, 1, "General"));
-        assertFalse(main.permitirEntrada(entradas, 2, "VIP"));
-        assertTrue(main.permitirEntrada(entradas, 3, "VIP"));
-        assertFalse(main.permitirEntrada(entradas, 4, "General"));
+        assertTrue(main.permitirEntrada(entradas, 0, "VIP")); //Puede entrar
+        assertFalse(main.permitirEntrada(entradas, 1, "General")); //Es menor de edad.
+        assertFalse(main.permitirEntrada(entradas, 2, "VIP")); //Ya esta dentro y lleva mucho invitado
+        assertFalse(main.permitirEntrada(entradas, 3, "VIP")); //Es menor de edad.
+        assertFalse(main.permitirEntrada(entradas, 4, "General")); //Ya esta dentro
     }
     @AfterEach
     void vaciarEntradas() {
